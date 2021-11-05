@@ -4,4 +4,6 @@ const app = express();
 
 app.get('/', (request, response) => response.json({ hello: 'World' }));
 
-app.listen(3333);
+app.listen(process.env.PORT || 8080, function() {
+    console.log("Express server listening")
+});
