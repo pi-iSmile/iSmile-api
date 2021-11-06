@@ -12,8 +12,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: tests
-    - run: ${GITHUB_REF##*/}
     - name: Use Node.js 16.11.0
       uses: actions/setup-node@v2
       with:
@@ -23,7 +21,6 @@ jobs:
     - run: npm test
     
   deploy:
-    if: github.event.base_ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     steps:
