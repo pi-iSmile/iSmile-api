@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "tsc": "tsc",
-    "start": "node dist/src/server.js"
+    "postinstall": "tsc",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
