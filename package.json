@@ -4,10 +4,9 @@
   "description": "iSmile-Api",
   "main": "server.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "test": "jest",
     "tsc": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/src/server.js"
   },
   "repository": {
     "type": "git",
