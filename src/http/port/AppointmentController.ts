@@ -1,24 +1,26 @@
+import { AppointmentService } from "../../application/AppointmentService";
+import { Appointment } from "../../domain/Appointment";
 import { Response, Request } from "express";
 
 export class AppointMentController {
 
     static getAppointments = async (req: Request, res: Response) => {
-        res.send("List of appointments");
+        res.send(AppointmentService.findAll());
     }
 
     static getAppointment = async (req: Request, res: Response) => {
-        res.send("appointment");
+        res.send(AppointmentService.find(new Appointment()));
     }
 
     static createAppointment = async (req: Request, res: Response) => {
-        res.send("appointment");
+        res.send(AppointmentService.create(new Appointment()));
     }
 
     static deleteAppointment = async (req: Request, res: Response) => {
-        res.send("appointment deleted");
+        res.send(AppointmentService.delete(new Appointment()));
     }
 
     static updateAppointment = async (req: Request, res: Response) => {
-        res.send("appointment updated");
+        res.send(AppointmentService.update(new Appointment()));
     }
 }
