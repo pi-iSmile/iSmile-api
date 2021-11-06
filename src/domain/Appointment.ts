@@ -1,4 +1,4 @@
-class Appointment {
+export class Appointment {
     id: String;
     patient_name: String;
     patient_email: String;
