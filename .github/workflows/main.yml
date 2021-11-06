@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: test
-    - run: ${GITHUB_REF##*/}
     - uses: actions/checkout@v2
+    - name: tests
+    - run: ${GITHUB_REF##*/}
     - name: Use Node.js 16.11.0
       uses: actions/setup-node@v2
       with:
