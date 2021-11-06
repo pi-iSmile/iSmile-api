@@ -1,14 +1,16 @@
 import express from 'express';
+import { DBConnection } from './infrastructure/db/DBConnection';
 import appRoutes from './http/Routes';
+import 'dotenv/config'
 
 class Server {
 
     private app: express.Application;
 
-
     constructor() {
         this.app = express();
         this.configuration();
+        new DBConnection().create()
         this.routes();   
     }
 

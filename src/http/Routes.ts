@@ -1,20 +1,20 @@
 import express from 'express';
 import { AppointMentController } from './port/AppointmentController';
-import { UserController } from './port/UserController';
+import { PatientController } from './port/PatientController';
 
 const router = express.Router();
 
-const userRouter = "/users/";
+const userRouter = "/patients/";
 
 const appointmentRouter = "/appointments/"
 
 
     router
-        .get(userRouter, UserController.getUsers)
-        .post(userRouter, UserController.createUser)
-        .put(userRouter.concat("/:id"), UserController.updateUser)
-        .delete(userRouter.concat("/:id"), UserController.deleteUser)
-        .get(userRouter.concat("/:id"), UserController.getUser)
+        .get(userRouter, PatientController.getAll)
+        .post(userRouter, PatientController.create)
+        .put(userRouter.concat("/:id"), PatientController.update)
+        .delete(userRouter.concat("/:id"), PatientController.delete)
+        .get(userRouter.concat("/:id"), PatientController.get)
         
         .get(appointmentRouter, AppointMentController.getAppointments)
         .post(appointmentRouter, AppointMentController.createAppointment)
