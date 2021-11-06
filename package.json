@@ -2,12 +2,12 @@
   "name": "ismile-api",
   "version": "1.0.0",
   "description": "iSmile-Api",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "test": "jest",
-    "tsc":"tsc",
-    "start": "npm run tsc && node dist/server.js"
+    "tsc": "tsc",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
