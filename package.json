@@ -7,7 +7,7 @@
     "test": "jest",
     "tsc": "tsc",
     "postinstall": "tsc",
-    "start": "node dist/server.js"
+    "start": "node src/server.js"
   },
   "engines": {
     "node": "16.11.0"
