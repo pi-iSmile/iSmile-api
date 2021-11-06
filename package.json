@@ -9,6 +9,9 @@
     "postinstall": "tsc",
     "start": "node dist/server.js"
   },
+  "engines": {
+    "node": "16.11.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/pi-iSmile/iSmile-api.git"
