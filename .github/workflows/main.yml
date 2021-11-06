@@ -21,10 +21,14 @@ jobs:
     - run: npm test
     
   deploy:
+  
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Extract Branch Name
+        run: echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
+        if: env.BRANCH == 'main'
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
