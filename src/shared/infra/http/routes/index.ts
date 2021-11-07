@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import appointmentRouter from '../routes/appointment/appointment-router;
-import professionalRouter from '../routes/professional/professional-router
-import patientRouter from '../routes/patient/patient-router;
+import appointmentRouter from '../routes/appointment/appointment-router';
+import professionalRouter from '../routes/professional/professional-router';
+import patientRouter from '../routes/patient/patient-router';
 
 const routes = Router();
 

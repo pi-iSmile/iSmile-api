@@ -1,4 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn,
+} from 'typeorm';
 import { Name } from './name';
 import { Email } from './email';
 import { Birthdate } from './birthdate';
@@ -16,10 +18,10 @@ export default abstract class BasePerson {
     @Column({ name: 'birthdate' })
     public birthdate: Birthdate
 
-    @Column({ name: 'created_at' })
+    @CreateDateColumn({ name: 'created_at' })
     public createdAt: Date
 
-    @Column({ name: 'updated_at' })
+    @UpdateDateColumn({ name: 'updated_at' })
     public updatedAt: Date
 
     protected constructor(name: Name, email: Email, birthdate: Birthdate) {
