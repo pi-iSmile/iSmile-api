@@ -10,7 +10,7 @@ import { InvalidEmailError } from '../shared/base-person/error/invalid-email-err
 import { InvalidBirthdateError } from '../shared/base-person/error/invalid-birthdate-error';
 
 @Entity()
-class Patient extends BasePerson {
+class Professional extends BasePerson {
   private constructor(name: Name, email: Email, birthdate: Birthdate) {
     super(name, email, birthdate);
   }
@@ -31,7 +31,7 @@ class Patient extends BasePerson {
     if (birthdateOrError.isLeft()) {
       return left(birthdateOrError.value);
     }
-    return right(new Patient(
+    return right(new Professional(
       nameOrError.value,
       emailOrError.value,
       birthdateOrError.value,
