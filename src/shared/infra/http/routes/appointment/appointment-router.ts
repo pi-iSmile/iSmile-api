@@ -7,14 +7,18 @@ import professionalRouter from '../professional/professional-router';
 const appointmentRouter = Router();
 const appointmentController = new AppointmentController();
 
-appointmentRouter.post(
-  '/',
-  celebrate({
-    [Segments.BODY]: {
-      anything: Joi.string().required(), // TODO -> review sub entities field on JSON and how to attach it to repository
-    },
-  }),
-  appointmentController.create,
-);
+// appointmentRouter.post(
+//   '/',
+//   celebrate({
+//     [Segments.BODY]: {
+//       anything: Joi.string(), // TODO -> review sub entities field on JSON and how to attach it to repository
+//     },
+//   }),
+//   appointmentController.create,
+// );
+
+appointmentRouter.post('/', (req, res, next) => {
+  appointmentController.create(req, res).catch(next);
+});
 
 export default appointmentRouter;

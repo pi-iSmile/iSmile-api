@@ -2,30 +2,26 @@ import express from 'express';
 import 'dotenv/config';
 import '../shared/infra/typeorm';
 
-class Server {
-    private app: express.Application;
+import { errors } from 'celebrate';
+import { Logger } from 'tslog';
+import routes from '../shared/infra/http/routes/index';
+import AppError from '../shared/AppError';
 
-    constructor() {
-      this.app = express();
-      this.configuration();
-      // this.routes();
-    }
+const log: Logger = new Logger();
 
-    public configuration() {
-      this.app.set('port', process.env.PORT || 3000);
-    }
+const app = express();
+app.use(express.json());
+app.use(routes);
+app.use(errors());
 
-    // public routes() {
-    //   this.app.use('/api', appRoutes)
-    //     .get('/', (request, response) => response.json({ hello: 'World' }));
-    // }
+app.use((err, req, res, next) => {
+  log.error(err);
+  if (err instanceof AppError) {
+    res.status(400).json({ b: 'b' });
+  }
+  res.status(500).json({ a: 'a' });
+});
 
-    public start() {
-      this.app.listen(this.app.get('port'), () => {
-        console.log('Express server listening');
-      });
-    }
-}
-
-const server = new Server();
-server.start();
+app.listen(process.env.PORT || 3000, () => {
+  log.info('🚀 Server started on port 3333');
+});

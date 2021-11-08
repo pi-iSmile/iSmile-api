@@ -11,10 +11,10 @@ patientRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      name: Joi.string().required(),
-      email: Joi.string().required(),
-      password: Joi.string().required(),
-      status: Joi.string().required(), // TODO -> create enum for status, maybe remove from the create path and put only on PUT
+      name: Joi.string(),
+      email: Joi.string(),
+      password: Joi.string(),
+      status: Joi.string(), // TODO -> create enum for status, maybe remove from the create path and put only on PUT
     },
   }),
   patientController.create,

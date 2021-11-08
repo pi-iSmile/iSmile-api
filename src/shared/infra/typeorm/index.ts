@@ -8,7 +8,7 @@ createConnection({
   synchronize: true,
   logging: true,
   entities: ['src/entity/**'],
-  migrations: ['migration/*.ts'],
+  migrations: ['src/shared/infra/typeorm/migration/*.ts'],
   migrationsRun: true,
   ssl: true,
   extra: {

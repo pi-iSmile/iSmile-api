@@ -2,6 +2,6 @@ import { Request, Response } from 'express';
 
 export default class PatientController {
   public async create(request: Request, response: Response): Promise<Response> {
-    return response.status(200);
+    return response.json('');
   }
 }

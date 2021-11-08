@@ -9,3 +9,5 @@ const routes = Router();
 routes.use('/appointments', appointmentRouter);
 routes.use('/professionals', professionalRouter);
 routes.use('/patients', patientRouter);
+
+export default routes;
