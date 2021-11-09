@@ -18,7 +18,6 @@ app.use(routes);
 app.use(errors());
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
-  console.error('alo');
   console.error(err);
 
   if (err instanceof AppError) {
