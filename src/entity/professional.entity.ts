@@ -1,5 +1,5 @@
 import { Column, Entity } from 'typeorm';
-import BasePerson from './base-person';
+import BasePerson from './shared/base-person';
 import { ProfessionalStatus } from './professional-status';
 
 @Entity('professional')

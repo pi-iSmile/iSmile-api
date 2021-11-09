@@ -1,4 +1,4 @@
-import { AppointmentEntity } from '../../../entity/appointment.entity';
+import { AppointmentEntity } from '../../../entity/appointment/appointment.entity';
 
 export default interface IAppointmentRepository {
     create(request: AppointmentEntity): Promise<AppointmentEntity>;

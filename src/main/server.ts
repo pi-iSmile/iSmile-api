@@ -1,9 +1,10 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 
 import 'dotenv/config';
 import { errors } from 'celebrate';
 import { Logger } from 'tslog';
 
+import 'express-async-errors';
 import AppError from '../shared/AppError';
 import '../shared/infra/typeorm/index';
 import routes from '../shared/infra/http/routes/index';
@@ -15,12 +16,21 @@ app.use(express.json());
 app.use(routes);
 app.use(errors());
 
-app.use((err, req, res, next) => {
-  log.error(err);
+app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
+  console.error('alo');
+  console.error(err);
+
   if (err instanceof AppError) {
-    res.status(400).json({ message: err.message });
+    return response.status(err.statusCode).json({
+      status: 'error',
+      message: err.message,
+    });
   }
-  res.status(500).json({ message: 'Oops! Unknown error happened' });
+
+  return response.status(500).json({
+    status: 'error',
+    message: 'Internal Server Error',
+  });
 });
 
 app.listen(process.env.PORT || 3000, () => {

@@ -1,7 +1,7 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
 import { Logger } from 'tslog';
 import IAppointmentRepository from '../../../usecase/appointment/repository/appointment-repository';
-import { AppointmentEntity } from '../../../entity/appointment.entity';
+import { AppointmentEntity } from '../../../entity/appointment/appointment.entity';
 
 const log: Logger = new Logger();
 
