@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es6",
     "lib": [
-      "es6"
+      "es5",
+      "es6",
+      "dom"
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "module": "commonjs",
+    "moduleResolution": "node",
     "baseUrl": "./src",
     "typeRoots": [
       "./node_modules/@types",
@@ -18,6 +21,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strict": true
   }
 }
