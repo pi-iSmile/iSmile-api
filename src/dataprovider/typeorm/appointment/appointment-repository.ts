@@ -1,11 +1,16 @@
-import { getRepository, Repository } from 'typeorm';
+import { EntityRepository, getRepository, Repository } from 'typeorm';
+import { Logger } from 'tslog';
 import IAppointmentRepository from '../../../usecase/appointment/repository/appointment-repository';
-import { AppointmentEntity } from '../../../entity/appointment/appointment.entity';
+import { AppointmentEntity } from '../../../entity/appointment.entity';
 
+const log: Logger = new Logger();
+
+@EntityRepository(AppointmentEntity)
 class AppointmentRepository implements IAppointmentRepository {
     private repository: Repository<AppointmentEntity>
 
     constructor() {
+      log.info('get repository');
       this.repository = getRepository(AppointmentEntity);
     }
 

@@ -1,26 +1,23 @@
 import { Request, Response } from 'express';
-import CreateProfessional from '../../../../usecase/professional/create-appointment';
-import { ProfessionalEntity } from '../../../../entity/professional/professional.entity';
+import { container } from 'tsyringe';
+import { ProfessionalEntity } from '../../../../entity/professional.entity';
+import CreateProfessional from '../../../../usecase/professional/create-professional';
 
 export default class ProfessionalController {
-    private createProfessional: CreateProfessional
+  public async create(request: Request, response: Response): Promise<Response> {
+    const {
+      name, email, password, birthdate,
+    } = request.body;
 
-    constructor(createProfessional: CreateProfessional) {
-      this.createProfessional = createProfessional;
-    }
+    const createProfessional = container.resolve(CreateProfessional);
 
-    public async create(request: Request, response: Response): Promise<Response> {
-      const {
-        name, email, password, birthdate,
-      } = request.body;
+    const result = await createProfessional.create(ProfessionalEntity.create(
+      name,
+      email,
+      birthdate,
+      password,
+    ));
 
-      const result = await this.createProfessional.create(ProfessionalEntity.create(
-        name,
-        email,
-        birthdate,
-        password,
-      ));
-
-      return response.status(201).json(result);
-    }
+    return response.status(201).json(result);
+  }
 }

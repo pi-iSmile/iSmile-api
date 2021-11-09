@@ -1,4 +1,4 @@
-import { PatientEntity } from '../../../entity/patient/patient.entity';
+import { PatientEntity } from '../../../entity/patient.entity';
 
 export default interface IPatientRepository {
     create(request: PatientEntity): Promise<PatientEntity>;

@@ -1,11 +1,12 @@
 import express from 'express';
-import 'dotenv/config';
 
+import 'dotenv/config';
 import { errors } from 'celebrate';
 import { Logger } from 'tslog';
-import routes from '../shared/infra/http/routes/index';
+
 import AppError from '../shared/AppError';
-import DatabaseConnection from '../shared/infra/typeorm';
+import '../shared/infra/typeorm/index';
+import routes from '../shared/infra/http/routes/index';
 
 const log: Logger = new Logger();
 
@@ -17,13 +18,11 @@ app.use(errors());
 app.use((err, req, res, next) => {
   log.error(err);
   if (err instanceof AppError) {
-    res.status(400).json({ b: 'b' });
+    res.status(400).json({ message: err.message });
   }
-  res.status(500).json({ a: 'a' });
+  res.status(500).json({ message: 'Oops! Unknown error happened' });
 });
 
 app.listen(process.env.PORT || 3000, () => {
   log.info('🚀 Server started on port 3333');
 });
-
-await DatabaseConnection.connection();

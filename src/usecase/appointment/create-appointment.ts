@@ -1,7 +1,7 @@
 import { isBefore, startOfHour } from 'date-fns';
 
 import AppointmentRepository from '../../dataprovider/typeorm/appointment/appointment-repository';
-import { AppointmentEntity } from '../../entity/appointment/appointment.entity';
+import { AppointmentEntity } from '../../entity/appointment.entity';
 import PatientRepository from '../../dataprovider/typeorm/patient/patient-repository';
 import ProfessionalRepository from '../../dataprovider/typeorm/professional/professional-repository';
 import AppError from '../../shared/AppError';

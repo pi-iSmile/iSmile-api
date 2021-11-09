@@ -53,6 +53,7 @@
     "sequelize": "^6.9.0",
     "ts-node": "^10.4.0",
     "tslog": "^3.2.2",
+    "tsyringe": "^4.6.0",
     "typeorm": "^0.2.38"
   }
 }

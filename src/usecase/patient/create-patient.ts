@@ -1,5 +1,5 @@
 import PatientRepository from '../../dataprovider/typeorm/patient/patient-repository';
-import { PatientEntity } from '../../entity/patient/patient.entity';
+import { PatientEntity } from '../../entity/patient.entity';
 
 export default class CreatePatient {
     private repository: PatientRepository

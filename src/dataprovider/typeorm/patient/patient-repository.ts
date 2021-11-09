@@ -1,11 +1,16 @@
-import { getRepository, Repository } from 'typeorm';
-import { PatientEntity } from '../../../entity/patient/patient.entity';
+import { EntityRepository, getRepository, Repository } from 'typeorm';
+import { Logger } from 'tslog';
+import { PatientEntity } from '../../../entity/patient.entity';
 import IPatientRepository from '../../../usecase/patient/repository/patient-repository';
 
+const log: Logger = new Logger();
+
+@EntityRepository(PatientEntity)
 class PatientRepository implements IPatientRepository {
     private repository: Repository<PatientEntity>
 
     constructor() {
+      log.info('get repository');
       this.repository = getRepository(PatientEntity);
     }
 

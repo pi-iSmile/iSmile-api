@@ -1,4 +1,4 @@
-import { ProfessionalEntity } from '../../../entity/professional/professional.entity';
+import { ProfessionalEntity } from '../../../entity/professional.entity';
 
 export default interface IProfessionalRepository {
     create(request: ProfessionalEntity): Promise<ProfessionalEntity>;

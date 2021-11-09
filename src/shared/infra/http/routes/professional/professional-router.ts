@@ -2,14 +2,10 @@ import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 import ProfessionalController from '../../../../../adapter/presentation/controller/professional/professional-controller';
-import CreateProfessional from '../../../../../usecase/professional/create-appointment';
-import ProfessionalRepository from '../../../../../dataprovider/typeorm/professional/professional-repository';
 
 const professionalRouter = Router();
 
-const professionalRepository = new ProfessionalRepository();
-const createProfessional = new CreateProfessional(professionalRepository);
-const professionalController = new ProfessionalController(createProfessional);
+const professionalController = new ProfessionalController();
 
 professionalRouter.post(
   '/',
