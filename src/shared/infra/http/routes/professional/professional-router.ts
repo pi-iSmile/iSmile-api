@@ -2,9 +2,14 @@ import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 import ProfessionalController from '../../../../../adapter/presentation/controller/professional/professional-controller';
+import CreateProfessional from '../../../../../usecase/professional/create-appointment';
+import ProfessionalRepository from '../../../../../dataprovider/typeorm/professional/professional-repository';
 
 const professionalRouter = Router();
-const professionalController = new ProfessionalController();
+
+const professionalRepository = new ProfessionalRepository();
+const createProfessional = new CreateProfessional(professionalRepository);
+const professionalController = new ProfessionalController(createProfessional);
 
 professionalRouter.post(
   '/',
@@ -13,7 +18,7 @@ professionalRouter.post(
       name: Joi.string().required(),
       email: Joi.string().required(),
       password: Joi.string().required(),
-      status: Joi.string().required(), // TODO -> create enum for status, remove from POST and put only on PUT
+      birthdate: Joi.date().required(),
     },
   }),
   professionalController.create,
