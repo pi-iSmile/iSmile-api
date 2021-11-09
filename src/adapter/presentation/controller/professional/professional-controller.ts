@@ -6,6 +6,7 @@ import UpdateProfessional from '../../../../usecase/professional/update-professi
 import UpdateProfessionalDTO from './dto/update-professional-dto';
 import UpdateProfessionalPasswordDTO from './dto/update-professional-password-d-t-o';
 import UpdateProfessionalPassword from '../../../../usecase/professional/update-professional-password';
+import { ProfessionalStatus } from '../../../../entity/professional/professional-status';
 
 export default class ProfessionalController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -34,7 +35,7 @@ export default class ProfessionalController {
 
     const professional = new UpdateProfessionalDTO(
       name,
-      status,
+      ProfessionalStatus[status as keyof typeof ProfessionalStatus],
       birthdate,
     );
 

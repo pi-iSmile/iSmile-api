@@ -26,8 +26,8 @@ patientRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required().min(5).max(255)
         .required(),
-      email: Joi.string().required(),
-      birthdate: Joi.date().required(),
+      email: Joi.string().email().required(),
+      birthdate: Joi.date().iso().required(),
     },
     [Segments.PARAMS]: {
       id: Joi.number().integer().positive().required(),

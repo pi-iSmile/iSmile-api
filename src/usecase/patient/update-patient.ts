@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import PatientRepository from '../../dataprovider/typeorm/patient/patient-repository';
 import { PatientEntity } from '../../entity/patient/patient.entity';
 import UpdatePatientDTO from '../../adapter/presentation/controller/patient/dto/update-patient-dto';
+import AppError from '../../shared/AppError';
 
 @injectable()
 export default class UpdatePatient {
@@ -11,14 +12,15 @@ export default class UpdatePatient {
   ) {}
 
   public async update(id: number, request: UpdatePatientDTO): Promise<PatientEntity> {
-    const entity = PatientEntity.create(
-      request.name,
-      request.email,
-      request.birthdate,
-    );
+    const existingPatient = await this.repository.findById(id);
+    if (!existingPatient) {
+      throw new AppError('Patient does not exist');
+    }
 
-    entity.id = id;
+    existingPatient.name = request.name;
+    existingPatient.birthdate = request.birthdate;
+    existingPatient.email = request.email;
 
-    return this.repository.update(entity);
+    return this.repository.update(existingPatient);
   }
 }
