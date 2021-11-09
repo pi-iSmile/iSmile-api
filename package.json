@@ -52,6 +52,7 @@
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.9.0",
+    "source-map-support": "^0.5.20",
     "ts-node": "^10.4.0",
     "tslog": "^3.2.2",
     "tsyringe": "^4.6.0",

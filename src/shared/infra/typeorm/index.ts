@@ -1,4 +1,4 @@
-import { Connection, createConnection } from 'typeorm';
+import { createConnection } from 'typeorm';
 import 'dotenv/config';
 
 createConnection(
@@ -9,8 +9,7 @@ createConnection(
     synchronize: true,
     logging: true,
     migrations: ['src/shared/infra/typeorm/migration/*.ts'],
-    // migrationsRun: true,
-    entities: ['src/entity/**/*.entity.ts'],
+    entities: ['{src, dist}/**/*.entity{.ts,.js}'],
     ssl: true,
     extra: {
       ssl: {
