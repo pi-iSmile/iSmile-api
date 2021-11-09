@@ -15,7 +15,9 @@ export default {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['src/usecase/**/.spec.*'],
+  collectCoverageFrom: [
+    'src/usecase/**/.spec.*',
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
@@ -32,9 +34,9 @@ export default {
   coverageReporters: [
     'json',
     'html',
-  //   "text",
-  //   "lcov",
-  //   "clover"
+    'text',
+    // "lcov",
+    // "clover"
   ],
 
   // An object that configures minimum threshold enforcement for coverage results
