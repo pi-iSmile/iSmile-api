@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import express, { Request, Response, NextFunction } from 'express';
 
 import 'dotenv/config';
@@ -33,6 +34,6 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   });
 });
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3333, () => {
   log.info('🚀 Server started on port 3333');
 });

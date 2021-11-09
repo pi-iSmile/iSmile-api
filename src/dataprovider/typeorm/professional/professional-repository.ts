@@ -1,8 +1,7 @@
-import { EntityRepository, getRepository, Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import IProfessionalRepository from '../../../usecase/patient/repository/patient-repository';
-import { ProfessionalEntity } from '../../../entity/professional.entity';
+import { ProfessionalEntity } from '../../../entity/professional/professional.entity';
 
-@EntityRepository(ProfessionalEntity)
 class ProfessionalRepository implements IProfessionalRepository {
     private repository: Repository<ProfessionalEntity>
 

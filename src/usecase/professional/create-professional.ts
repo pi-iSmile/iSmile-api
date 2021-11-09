@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { ProfessionalEntity } from '../../entity/professional.entity';
+import { ProfessionalEntity } from '../../entity/professional/professional.entity';
 import IProfessionalRepository from './repository/professional-repository';
 import ProfessionalRepository from '../../dataprovider/typeorm/professional/professional-repository';
 

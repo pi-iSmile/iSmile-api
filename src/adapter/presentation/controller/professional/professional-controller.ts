@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { ProfessionalEntity } from '../../../../entity/professional.entity';
+import { ProfessionalEntity } from '../../../../entity/professional/professional.entity';
 import CreateProfessional from '../../../../usecase/professional/create-professional';
 
 export default class ProfessionalController {

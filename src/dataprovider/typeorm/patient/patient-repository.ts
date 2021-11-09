@@ -1,6 +1,6 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
 import { Logger } from 'tslog';
-import { PatientEntity } from '../../../entity/patient.entity';
+import { PatientEntity } from '../../../entity/patient/patient.entity';
 import IPatientRepository from '../../../usecase/patient/repository/patient-repository';
 
 const log: Logger = new Logger();

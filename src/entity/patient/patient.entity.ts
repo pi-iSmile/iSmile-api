@@ -1,5 +1,5 @@
 import { Entity } from 'typeorm';
-import BasePerson from './shared/base-person';
+import BasePerson from '../shared/base-person';
 
 @Entity('patient')
 export class PatientEntity extends BasePerson {
