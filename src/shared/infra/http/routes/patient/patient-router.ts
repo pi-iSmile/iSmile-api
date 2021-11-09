@@ -36,8 +36,8 @@ patientRouter.put(
   patientController.update,
 );
 
-patientRouter.delete(
-  '/:id
+patientRouter.get(
+  '/:id',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required().min(5).max(255)
@@ -49,7 +49,7 @@ patientRouter.delete(
       id: Joi.number().integer().positive().required(),
     },
   }),
-  patientController.update,
+  patientController.findById,
 );
 
 export default patientRouter;

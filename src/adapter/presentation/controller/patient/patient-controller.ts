@@ -32,9 +32,9 @@ export default class PatientController {
 
     const updatePatient = container.resolve(UpdatePatient);
 
-    const dto = new UpdatePatientDTO(name, email, birthdate);
+    const patient = new UpdatePatientDTO(name, email, birthdate);
 
-    const result = await updatePatient.update(id, entity);
+    const result = await updatePatient.update(parseInt(id), patient);
 
     return response.status(201).json(result);
   }
@@ -44,7 +44,7 @@ export default class PatientController {
 
     const getPatient = container.resolve(GetPatient);
 
-    const result = await getPatient.findById(id);
+    const result = await getPatient.findById(parseInt(id));
 
     return response.status(200).json(result);
   }
