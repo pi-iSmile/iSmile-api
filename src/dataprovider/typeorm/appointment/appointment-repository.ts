@@ -1,4 +1,6 @@
-import { EntityRepository, getRepository, Repository } from 'typeorm';
+import {
+  Between, EntityRepository, getRepository, Repository,
+} from 'typeorm';
 import { Logger } from 'tslog';
 import IAppointmentRepository from '../../../usecase/appointment/repository/appointment-repository';
 import { AppointmentEntity } from '../../../entity/appointment/appointment.entity';
@@ -55,6 +57,17 @@ class AppointmentRepository implements IAppointmentRepository {
     public async findByStatus(status: string): Promise<AppointmentEntity | undefined> {
       const appointment = await this.repository.findOne({
         where: { status },
+      });
+
+      return appointment;
+    }
+
+    public async findByDateBetweenAndProfessionalId(from: Date, to: Date, professinonalId: number): Promise<AppointmentEntity | undefined> {
+      const appointment = await this.repository.findOne({
+        where: {
+          professional_id: professinonalId,
+          date: Between(from, to),
+        },
       });
 
       return appointment;

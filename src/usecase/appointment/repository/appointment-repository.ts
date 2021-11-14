@@ -7,5 +7,6 @@ export default interface IAppointmentRepository {
     findByStatus(status: string): Promise<AppointmentEntity | undefined>;
     findByPatientId(patientId: number): Promise<AppointmentEntity | undefined>;
     findByProfessionalId(professionalId: number): Promise<AppointmentEntity | undefined>;
+    findByDateBetweenAndProfessionalId(from: Date, to: Date, professinonalId: number): Promise<AppointmentEntity | undefined>;
     findAll(): Promise<AppointmentEntity[]>;
 };

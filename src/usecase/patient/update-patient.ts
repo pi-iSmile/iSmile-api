@@ -3,12 +3,13 @@ import PatientRepository from '../../dataprovider/typeorm/patient/patient-reposi
 import { PatientEntity } from '../../entity/patient/patient.entity';
 import UpdatePatientDTO from '../../adapter/presentation/controller/patient/dto/update-patient-dto';
 import AppError from '../../shared/AppError';
+import IPatientRepository from './repository/patient-repository';
 
 @injectable()
 export default class UpdatePatient {
   constructor(
         @inject(PatientRepository)
-        private repository: PatientRepository,
+        private repository: IPatientRepository,
   ) {}
 
   public async update(id: number, request: UpdatePatientDTO): Promise<PatientEntity> {
