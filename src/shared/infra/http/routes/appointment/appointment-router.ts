@@ -6,14 +6,27 @@ import AppointmentController from '../../../../../adapter/presentation/controlle
 const appointmentRouter = Router();
 const appointmentController = new AppointmentController();
 
-// appointmentRouter.post('/', appointmentController.create);
-
 appointmentRouter.post('/',
   celebrate({
     [Segments.BODY]: {
-      anything: Joi.string(), // TODO -> review sub entities field on JSON and how to attach it to repository
+      date: Joi.date().iso().required(),
+      status: Joi.required(),
+      patientId: Joi.number().required(),
+      professionalId: Joi.number().required() 
     },
   }),
   appointmentController.create);
+
+appointmentRouter.put('/:id',
+  celebrate({
+    [Segments.BODY]: {
+      date: Joi.date().iso().required(),
+      status: Joi.required(),
+    },
+    [Segments.PARAMS]: {
+      id: Joi.number().integer().positive().required(),
+    }
+  }),
+  appointmentController.update);
 
 export default appointmentRouter;
