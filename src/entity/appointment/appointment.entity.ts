@@ -8,6 +8,10 @@ import { ProfessionalEntity } from '../professional/professional.entity';
 export class AppointmentEntity extends BaseEntity {
   private constructor(date: Date, status: AppointmentStatus = AppointmentStatus.PENDING, patient: PatientEntity, professional: ProfessionalEntity) {
     super();
+    this.date = date;
+    this.status = status;
+    this.patient = patient;
+    this.professional = professional;
   }
 
     @Column({ name: 'date' })

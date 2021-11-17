@@ -58,15 +58,28 @@ class AppointmentRepository implements IAppointmentRepository {
       return appointment;
     }
 
-    public async findByDateBetweenAndProfessionalId(from: Date, to: Date, professinonalId: number): Promise<AppointmentEntity | undefined> {
-      const appointment = await this.repository.findOne({
+    public async findByDateAndProfessionalEmail(date: Date, professionalEmail: string): Promise<AppointmentEntity | undefined> {
+      return await this.repository.findOne({
+        relations: ['professional'],
         where: {
-          professional_id: professinonalId,
-          date: Between(from, to),
+          professional: {
+            email: professionalEmail,
+          },
+          date,
         },
       });
+    }
 
-      return appointment;
+    public async findByDateAndPatientEmail(date: Date, patientEmail: string): Promise<AppointmentEntity | undefined> {
+      return await this.repository.findOne({
+        relations: ['patient'],
+        where: {
+          patient: {
+            email: patientEmail,
+          },
+          date,
+        },
+      });
     }
 }
 

@@ -1,28 +1,19 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { AppointmentEntity } from '../../../../entity/appointment/appointment.entity';
-import GetPatient from '../../../../usecase/patient/get-patient';
-import GetProfessional from '../../../../usecase/professional/get-professional';
 import CreateAppointment from '../../../../usecase/appointment/create-appointment';
 import GetAppointment from '../../../../usecase/appointment/get-appointment';
 import UpdateAppointment from '../../../../usecase/appointment/update-appointment';
+import CreateAppointmentDto from './dto/create-appointment-dto';
 
 export default class AppointmentController {
   public async create(request: Request, response: Response): Promise<Response> {
     const {
-      date, status, patientId, professinalId,
+      professionalEmail, patientEmail, date,
     } = request.body;
-
-    const patientEntity = await container.resolve(GetPatient).findById(parseInt(patientId));
-
-    const professionalEntity = await container.resolve(GetProfessional).findById(parseInt(professinalId));
 
     const createAppointment = container.resolve(CreateAppointment);
 
-    const result = await createAppointment.create(AppointmentEntity.create(date,
-      status,
-      patientEntity,
-      professionalEntity));
+    const result = await createAppointment.create(new CreateAppointmentDto(professionalEmail, patientEmail, date));
 
     return response.status(201).json(result);
   }

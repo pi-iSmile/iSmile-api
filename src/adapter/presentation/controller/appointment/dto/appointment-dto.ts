@@ -1,18 +1,18 @@
 import { AppointmentStatus } from '../../../../../entity/appointment/appointment-status';
 
 export default class AppointmentDto {
-  constructor(date: Date, status: AppointmentStatus, patientId: number, professionalId: number) {
+  constructor(date: Date, status: AppointmentStatus, patientEmail: string, professionalEmail: string) {
     this.date = date;
     this.status = status;
-    this.patientId = patientId;
-    this.professionalId = professionalId;
+    this.patientEmail = patientEmail;
+    this.professionalEmail = professionalEmail;
   }
 
     public date: Date
 
     public status: AppointmentStatus
 
-    public patientId: number
+    public patientEmail: string
 
-    public professionalId: number
+    public professionalEmail: string
 }

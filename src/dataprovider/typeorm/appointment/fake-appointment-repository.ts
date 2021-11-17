@@ -36,11 +36,19 @@ export class FakeAppointmentRepository implements IAppointmentRepository {
       return this.appointments.find((p) => p.professional.id === professionalId);
     }
 
-    public async findByDateBetweenAndProfessionalId(from: Date, to: Date, professinonalId: number): Promise<AppointmentEntity | undefined> {
-      return this.appointments.find((p) => (p.date >= from && p.date <= to && p.professional.id === professinonalId));
-    }
+    // public async findByDateBetweenAndProfessionalId(from: Date, to: Date, professinonalId: number): Promise<AppointmentEntity | undefined> {
+    //   return this.appointments.find((p) => (p.date >= from && p.date <= to && p.professional.id === professinonalId));
+    // }
 
     public async findAll(): Promise<AppointmentEntity[]> {
       return this.appointments;
+    }
+
+    public async findByDateAndPatientEmail(date: Date, patientEmail: string): Promise<AppointmentEntity | undefined> {
+      return this.appointments.find((p) => p.date === date && p.patient.email === patientEmail);
+    }
+
+    public async findByDateAndProfessionalEmail(date: Date, professionalEmail: string): Promise<AppointmentEntity | undefined> {
+      return this.appointments.find((p) => p.date === date && p.professional.email === professionalEmail);
     }
 }
