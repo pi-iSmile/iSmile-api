@@ -4,19 +4,19 @@ import { AppointmentEntity } from '../../entity/appointment/appointment.entity';
 import AppError from '../../shared/AppError';
 import IAppointmentRepository from './repository/appointment-repository';
 
-
 @injectable()
 export default class GetAppointment {
   constructor(
         @inject(AppointmentRepository)
-        private appointmentRepository: IAppointmentRepository
-        ){}
+        private appointmentRepository: IAppointmentRepository,
+  ) {
+  }
 
-        public async findById(id: number): Promise<AppointmentEntity> {
-            const appointment = await this.appointmentRepository.findById(id);
-            if (!appointment) {
-              throw new AppError('Appointment does not exist.');
-            }
-            return appointment;
-        }
-} 
+  public async findById(id: number): Promise<AppointmentEntity> {
+    const appointment = await this.appointmentRepository.findById(id);
+    if (!appointment) {
+      throw new AppError('Appointment does not exist.');
+    }
+    return appointment;
+  }
+}

@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import ProfessionalController from '../../../../../adapter/presentation/controller/professional/professional-controller';
+import ProfessionalController
+  from '../../../../../adapter/presentation/controller/professional/professional-controller';
 
 const professionalRouter = Router();
 

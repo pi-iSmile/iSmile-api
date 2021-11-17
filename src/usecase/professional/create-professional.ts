@@ -10,7 +10,8 @@ export default class CreateProfessional {
   constructor(
         @inject(ProfessionalRepository)
         private repository: IProfessionalRepository,
-  ) {}
+  ) {
+  }
 
   public async create(request: ProfessionalEntity): Promise<ProfessionalEntity> {
     await this.validate(request);

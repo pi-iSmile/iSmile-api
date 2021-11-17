@@ -12,7 +12,7 @@ appointmentRouter.post('/',
       date: Joi.date().iso().required(),
       status: Joi.required(),
       patientId: Joi.number().required(),
-      professionalId: Joi.number().required() 
+      professionalId: Joi.number().required(),
     },
   }),
   appointmentController.create);
@@ -25,7 +25,7 @@ appointmentRouter.put('/:id',
     },
     [Segments.PARAMS]: {
       id: Joi.number().integer().positive().required(),
-    }
+    },
   }),
   appointmentController.update);
 

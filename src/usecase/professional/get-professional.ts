@@ -10,7 +10,8 @@ export default class GetProfessional {
   constructor(
         @inject(ProfessionalRepository)
         private repository: IProfessionalRepository,
-  ) {}
+  ) {
+  }
 
   public async findById(id: number): Promise<ProfessionalEntity> {
     const professioanl = await this.repository.findById(id);

@@ -1,4 +1,3 @@
-import PatientRepository from '../../dataprovider/typeorm/patient/patient-repository';
 import { PatientEntity } from '../../entity/patient/patient.entity';
 import CreatePatient from './create-patient';
 import IPatientRepository from './repository/patient-repository';
@@ -26,11 +25,7 @@ describe('CreatePatient', () => {
     const patient = PatientEntity.create('dummy-name', 'dummy-email@gmail.com', new Date());
     await underTest.create(patient);
     const newPatient = PatientEntity.create('dummy-name', 'dummy-email@gmail.com', new Date());
-    // Act
-    const result = async () => {
-      await underTest.create(newPatient);
-    };
-    // Assert
+    // Act-Assert
     await expect(underTest.create(newPatient)).rejects.toBeInstanceOf(AppError);
   });
 });

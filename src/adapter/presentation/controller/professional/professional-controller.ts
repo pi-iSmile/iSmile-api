@@ -4,9 +4,9 @@ import { ProfessionalEntity } from '../../../../entity/professional/professional
 import CreateProfessional from '../../../../usecase/professional/create-professional';
 import UpdateProfessional from '../../../../usecase/professional/update-professional';
 import UpdateProfessionalDTO from './dto/update-professional-dto';
-import UpdateProfessionalPasswordDTO from './dto/update-professional-password-d-t-o';
 import UpdateProfessionalPassword from '../../../../usecase/professional/update-professional-password';
 import { ProfessionalStatus } from '../../../../entity/professional/professional-status';
+import UpdateProfessionalPasswordDto from './dto/update-professional-password-dto';
 
 export default class ProfessionalController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -51,7 +51,7 @@ export default class ProfessionalController {
 
     const updateProfessional = container.resolve(UpdateProfessionalPassword);
 
-    const professional = new UpdateProfessionalPasswordDTO(
+    const professional = new UpdateProfessionalPasswordDto(
       old_password, new_password,
     );
 

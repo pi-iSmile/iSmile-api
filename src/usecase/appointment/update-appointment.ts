@@ -10,10 +10,11 @@ import IAppointmentRepository from './repository/appointment-repository';
 export default class UpdateAppointment {
   constructor(
         @inject(AppointmentRepository)
-        private appointmentRepository: IAppointmentRepository
-        ){}
+        private appointmentRepository: IAppointmentRepository,
+  ) {
+  }
 
-        public async update(appointment: AppointmentEntity): Promise<AppointmentEntity> {
-            return await this.appointmentRepository.update(appointment);
-        }
-} 
+  public async update(appointment: AppointmentEntity): Promise<AppointmentEntity> {
+    return await this.appointmentRepository.update(appointment);
+  }
+}

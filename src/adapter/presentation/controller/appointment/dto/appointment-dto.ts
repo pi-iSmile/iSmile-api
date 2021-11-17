@@ -1,4 +1,3 @@
-import { Long } from 'typeorm';
 import { AppointmentStatus } from '../../../../../entity/appointment/appointment-status';
 
 export default class AppointmentDto {

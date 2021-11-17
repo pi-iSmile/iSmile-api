@@ -9,7 +9,8 @@ export default class GetPatient {
   constructor(
         @inject(PatientRepository)
         private repository: IPatientRepository,
-  ) {}
+  ) {
+  }
 
   public async findById(id: number): Promise<PatientEntity> {
     const patient = await this.repository.findById(id);

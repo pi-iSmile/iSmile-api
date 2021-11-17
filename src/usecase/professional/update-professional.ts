@@ -11,7 +11,8 @@ export default class UpdateProfessional {
   constructor(
         @inject(ProfessionalRepository)
         private repository: IProfessionalRepository,
-  ) {}
+  ) {
+  }
 
   public async update(id: number, request: UpdateProfessionalDTO): Promise<ProfessionalEntity> {
     const existingProfessional = await this.repository.findById(id);

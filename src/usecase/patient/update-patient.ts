@@ -10,7 +10,8 @@ export default class UpdatePatient {
   constructor(
         @inject(PatientRepository)
         private repository: IPatientRepository,
-  ) {}
+  ) {
+  }
 
   public async update(id: number, request: UpdatePatientDTO): Promise<PatientEntity> {
     const existingPatient = await this.repository.findById(id);
