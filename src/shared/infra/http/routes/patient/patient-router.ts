@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 import PatientController from '../../../../../adapter/presentation/controller/patient/patient-controller';
+import ensureAuthenticated from '../../../../middleware/ensure-authenticated';
 
 const patientRouter = Router();
 
@@ -33,6 +34,7 @@ patientRouter.put(
       id: Joi.number().integer().positive().required(),
     },
   }),
+  ensureAuthenticated,
   patientController.update,
 );
 
@@ -49,6 +51,7 @@ patientRouter.get(
       id: Joi.number().integer().positive().required(),
     },
   }),
+  ensureAuthenticated,
   patientController.findById,
 );
 

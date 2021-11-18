@@ -3,6 +3,7 @@ import AppError from '../../shared/AppError';
 import IProfessionalRepository from './repository/professional-repository';
 import UpdateProfessional from './update-professional';
 import { ProfessionalEntity } from '../../entity/professional/professional.entity';
+import { ProfessionalStatus } from '../../entity/professional/professional-status';
 
 let repository: IProfessionalRepository;
 let underTest: UpdateProfessional;
@@ -15,20 +16,19 @@ describe('UpdateProfessional', () => {
   it('Should update existing professional successfully', async () => {
     // Arrange
     const existingProfessional = await repository.create(ProfessionalEntity.create('mockado', 'mockado@gmail.com', new Date(), '123'));
-    const newProfessional = ProfessionalEntity.create('teste', 'teste@gmail.com', new Date(), '123');
-    newProfessional.id = existingProfessional.id;
+    const newName = 'teste';
+    const newStatus = ProfessionalStatus.DISABLED;
+    const newBirthdate = new Date();
     // Act
-    const result = await underTest.update(newProfessional.id, newProfessional);
+    const result = await underTest.update(existingProfessional.id, newName, newStatus, newBirthdate);
     // Assert
     expect(result.id).toBe(existingProfessional.id);
-    expect(result.name).toBe(newProfessional.name);
-    expect(result.birthdate).toBe(newProfessional.birthdate);
+    expect(result.name).toBe(newName);
+    expect(result.status).toBe(newStatus);
+    expect(result.birthdate).toBe(newBirthdate);
   });
   it('Should throw error if professional does not exist', async () => {
-    // Arrange
-    const professional = ProfessionalEntity.create('teste', 'teste@gmail.com', new Date(), '123');
-    professional.id = 1;
     // Act-Assert
-    await expect(underTest.update(professional.id, professional)).rejects.toBeInstanceOf(AppError);
+    await expect(underTest.update(1, 'dummy-name', ProfessionalStatus.DISABLED, new Date())).rejects.toBeInstanceOf(AppError);
   });
 });

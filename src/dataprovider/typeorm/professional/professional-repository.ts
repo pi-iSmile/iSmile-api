@@ -1,6 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
-import IProfessionalRepository from '../../../usecase/patient/repository/patient-repository';
 import { ProfessionalEntity } from '../../../entity/professional/professional.entity';
+import IProfessionalRepository from '../../../usecase/professional/repository/professional-repository';
 
 class ProfessionalRepository implements IProfessionalRepository {
     private repository: Repository<ProfessionalEntity>
@@ -39,6 +39,14 @@ class ProfessionalRepository implements IProfessionalRepository {
 
     public async update(request: ProfessionalEntity): Promise<ProfessionalEntity> {
       return this.repository.save(request);
+    }
+
+    public async findByEmailAndPassword(email: string, password: string): Promise<ProfessionalEntity | undefined> {
+      const patient = await this.repository.findOne({
+        where: { email, password },
+      });
+
+      return patient;
     }
 }
 

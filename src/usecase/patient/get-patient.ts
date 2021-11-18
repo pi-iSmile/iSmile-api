@@ -15,7 +15,7 @@ export default class GetPatient {
   public async findById(id: number): Promise<PatientEntity> {
     const patient = await this.repository.findById(id);
     if (!patient) {
-      throw new AppError('Patient does not exist.');
+      throw new AppError(`Paciente com ID: ${id} não existe.`, 404);
     }
     return patient;
   }

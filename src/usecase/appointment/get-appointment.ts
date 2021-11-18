@@ -15,7 +15,7 @@ export default class GetAppointment {
   public async findById(id: number): Promise<AppointmentEntity> {
     const appointment = await this.appointmentRepository.findById(id);
     if (!appointment) {
-      throw new AppError('Appointment does not exist.');
+      throw new AppError(`Agendamento com o ${id} não existe.`, 404);
     }
     return appointment;
   }

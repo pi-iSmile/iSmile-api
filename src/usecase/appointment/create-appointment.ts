@@ -12,7 +12,6 @@ import IAppointmentRepository from './repository/appointment-repository';
 import IPatientRepository from '../patient/repository/patient-repository';
 import IProfessionalRepository from '../professional/repository/professional-repository';
 import { ProfessionalEntity } from '../../entity/professional/professional.entity';
-import CreateAppointmentDto from '../../adapter/presentation/controller/appointment/dto/create-appointment-dto';
 import { AppointmentStatus } from '../../entity/appointment/appointment-status';
 import { PatientEntity } from '../../entity/patient/patient.entity';
 
@@ -28,40 +27,40 @@ export default class CreateAppointment {
   ) {
   }
 
-  public async create(request: CreateAppointmentDto): Promise<AppointmentEntity> {
-    if (getMinutes(request.date) !== 0 || getSeconds(request.date) !== 0) {
+  public async create(date: Date, professionalEmail: string, patientEmail: string): Promise<AppointmentEntity> {
+    if (getMinutes(date) !== 0 || getSeconds(date) !== 0) {
       throw new AppError('Você somente pode marcar horários em ponto. Exemplo: 13:00, 14:00, 15:00, etc.');
     }
 
-    const appointmentDate = startOfHour(request.date);
+    const appointmentDate = startOfHour(date);
 
-    const professional = await this.professionalRepository.findByEmail(request.professionalEmail);
+    const professional = await this.professionalRepository.findByEmail(professionalEmail);
     if (professional == null) {
-      throw new AppError('Profissional com este e-mail não existe.');
+      throw new AppError(`Um profissional com o e-mail ${professionalEmail} não existe.`, 404);
     }
 
-    const patient = await this.patientRepository.findByEmail(request.patientEmail);
+    const patient = await this.patientRepository.findByEmail(patientEmail);
     if (patient == null) {
-      throw new AppError('Paciente com este e-mail não existe.');
+      throw new AppError(`Um paciente com o e-mail ${patientEmail} não existe.`, 404);
     }
 
     if (isBefore(appointmentDate, Date.now())) {
-      throw new AppError('Você não pode agendar com uma data que ja passou.');
+      throw new AppError('Você não pode agendar com uma data que ja passou.', 422);
     }
 
     if (getHours(appointmentDate) < 8 || getHours(appointmentDate) > 18) {
-      throw new AppError('Só é possível agendar entre 08:00 e 18:00.');
+      throw new AppError('Só é possível agendar entre 08:00 e 18:00.', 422);
     }
 
     if (await this.professionalAlreadyHasAppointment(professional, appointmentDate)) {
-      throw new AppError('Já existe um outro agendamento neste horário para este profissional.');
+      throw new AppError('Já existe um outro agendamento neste horário para este profissional.', 422);
     }
 
     if (await this.patientAlreadyHasAppointment(patient, appointmentDate)) {
-      throw new AppError('Já existe um outro agendamento neste horário para este paciente.');
+      throw new AppError('Já existe um outro agendamento neste horário para este paciente.', 422);
     }
 
-    const appointment = AppointmentEntity.create(request.date, AppointmentStatus.PENDING, patient, professional);
+    const appointment = AppointmentEntity.create(date, AppointmentStatus.PENDING, patient, professional);
 
     return await this.appointmentRepository.create(appointment);
   }

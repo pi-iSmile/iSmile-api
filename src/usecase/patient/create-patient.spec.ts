@@ -16,16 +16,15 @@ describe('CreatePatient', () => {
     // Arrange
     const patient = PatientEntity.create('mockado', 'mockado@gmail.com', new Date());
     // Act
-    const result = await underTest.create(patient);
+    const result = await underTest.create('mockado', 'mockado@gmail.com', new Date());
     // Assert
-    expect(result).toBe(patient);
+    expect(result.name).toBe(patient.name);
+    expect(result.email).toBe(patient.email);
   });
   it('Should throw error if patient already exists', async () => {
     // Arrange
-    const patient = PatientEntity.create('dummy-name', 'dummy-email@gmail.com', new Date());
-    await underTest.create(patient);
-    const newPatient = PatientEntity.create('dummy-name', 'dummy-email@gmail.com', new Date());
+    await underTest.create('dummy-name', 'dummy-email@gmail.com', new Date());
     // Act-Assert
-    await expect(underTest.create(newPatient)).rejects.toBeInstanceOf(AppError);
+    await expect(underTest.create('dummy-name', 'dummy-email@gmail.com', new Date())).rejects.toBeInstanceOf(AppError);
   });
 });

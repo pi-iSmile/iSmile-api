@@ -12,8 +12,8 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "typeRoots": [
+      "./src/@types",
       "./node_modules/@types",
-      "./src/@types"
     ],
     "resolveJsonModule": true,
     "outDir": "./dist",

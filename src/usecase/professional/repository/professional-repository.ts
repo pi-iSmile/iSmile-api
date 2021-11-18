@@ -10,4 +10,6 @@ export default interface IProfessionalRepository {
     findByEmail(email: string): Promise<ProfessionalEntity | undefined>;
 
     findAll(): Promise<ProfessionalEntity[]>;
+
+    findByEmailAndPassword(email: string, password: string): Promise<ProfessionalEntity | undefined>;
 }

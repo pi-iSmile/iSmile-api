@@ -15,21 +15,17 @@ describe('UpdatePatient', () => {
   it('Should update existing patient successfully', async () => {
     // Arrange
     const existingPatient = await repository.create(PatientEntity.create('mockado', 'mockado@gmail.com', new Date()));
-    const newPatient = PatientEntity.create('teste', 'teste@gmail.com', new Date());
-    newPatient.id = existingPatient.id;
     // Act
-    const result = await underTest.update(newPatient.id, newPatient);
+    const date = new Date();
+    const result = await underTest.update(existingPatient.id, 'teste', 'teste@gmail.com', date);
     // Assert
     expect(result.id).toBe(existingPatient.id);
-    expect(result.name).toBe(newPatient.name);
-    expect(result.email).toBe(newPatient.email);
-    expect(result.birthdate).toBe(newPatient.birthdate);
+    expect(result.name).toBe('teste');
+    expect(result.email).toBe('teste@gmail.com');
+    expect(result.birthdate).toBe(date);
   });
   it('Should throw error if patient does not exist', async () => {
-    // Arrange
-    const patient = PatientEntity.create('teste', 'teste@gmail.com', new Date());
-    patient.id = 1;
     // Act-Assert
-    await expect(underTest.update(patient.id, patient)).rejects.toBeInstanceOf(AppError);
+    await expect(underTest.update(1, 'teste', 'teste@gmail.com', new Date())).rejects.toBeInstanceOf(AppError);
   });
 });

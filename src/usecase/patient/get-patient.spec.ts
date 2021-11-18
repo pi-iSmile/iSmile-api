@@ -21,8 +21,6 @@ describe('UpdatePatient', () => {
     expect(result).toBe(patient);
   });
   it('Should throw error if patient does not exist', async () => {
-    // Arrange
-    const patient = PatientEntity.create('dummy-name', 'dummy-email@gmail.com', new Date());
     // Act-Assert
     await expect(underTest.findById(-1)).rejects.toBeInstanceOf(AppError);
   });

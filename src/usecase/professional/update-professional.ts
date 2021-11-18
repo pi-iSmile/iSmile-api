@@ -4,7 +4,7 @@ import { ProfessionalEntity } from '../../entity/professional/professional.entit
 import IProfessionalRepository from './repository/professional-repository';
 import ProfessionalRepository from '../../dataprovider/typeorm/professional/professional-repository';
 import AppError from '../../shared/AppError';
-import UpdateProfessionalDTO from '../../adapter/presentation/controller/professional/dto/update-professional-dto';
+import { ProfessionalStatus } from '../../entity/professional/professional-status';
 
 @injectable()
 export default class UpdateProfessional {
@@ -14,23 +14,23 @@ export default class UpdateProfessional {
   ) {
   }
 
-  public async update(id: number, request: UpdateProfessionalDTO): Promise<ProfessionalEntity> {
+  public async update(id: number, name: string, status: ProfessionalStatus, birthdate: Date): Promise<ProfessionalEntity> {
     const existingProfessional = await this.repository.findById(id);
     if (!existingProfessional) {
-      throw new AppError('Professional does not exist');
+      throw new AppError(`Profissional com ID: ${id} não existe.`, 404);
     }
-    await this.validate(request);
+    await this.validateDate(birthdate);
 
-    existingProfessional.name = request.name;
-    existingProfessional.birthdate = request.birthdate;
-    existingProfessional.status = request.status;
+    existingProfessional.name = name;
+    existingProfessional.birthdate = birthdate;
+    existingProfessional.status = status;
 
     return this.repository.update(existingProfessional);
   }
 
-  public async validate(request: UpdateProfessionalDTO) {
-    if (isAfter(request.birthdate, new Date())) {
-      throw new AppError('Birthdate must be in the past.');
+  public async validateDate(birthdate: Date) {
+    if (isAfter(birthdate, new Date())) {
+      throw new AppError('Data de nascimento inválida.');
     }
   }
 }

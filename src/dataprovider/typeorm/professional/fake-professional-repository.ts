@@ -1,5 +1,5 @@
-import IProfessionalRepository from '../../../usecase/patient/repository/patient-repository';
 import { ProfessionalEntity } from '../../../entity/professional/professional.entity';
+import IProfessionalRepository from '../../../usecase/professional/repository/professional-repository';
 
 export class FakeProfessionalRepository implements IProfessionalRepository {
     private professionals: ProfessionalEntity[] = [];
@@ -30,5 +30,9 @@ export class FakeProfessionalRepository implements IProfessionalRepository {
       this.professionals[index] = request;
 
       return request;
+    }
+
+    public async findByEmailAndPassword(email: string, password: string): Promise<ProfessionalEntity | undefined> {
+      return this.professionals.find((p) => p.email === email && p.password === password);
     }
 }

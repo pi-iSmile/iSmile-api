@@ -3,6 +3,7 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import ProfessionalController
   from '../../../../../adapter/presentation/controller/professional/professional-controller';
+import ensureAuthenticated from '../../../../middleware/ensure-authenticated';
 
 const professionalRouter = Router();
 
@@ -33,6 +34,7 @@ professionalRouter.put(
       id: Joi.number().integer().positive().required(),
     },
   }),
+  ensureAuthenticated,
   professionalController.update,
 );
 
@@ -40,13 +42,14 @@ professionalRouter.put(
   '/:id/password',
   celebrate({
     [Segments.BODY]: {
-      old_password: Joi.string().min(4).max(255).required(),
-      new_password: Joi.string().min(4).max(255).required(),
+      oldPassword: Joi.string().min(4).max(255).required(),
+      newPassword: Joi.string().min(4).max(255).required(),
     },
     [Segments.PARAMS]: {
       id: Joi.number().integer().positive().required(),
     },
   }),
+  ensureAuthenticated,
   professionalController.updatePassword,
 );
 
