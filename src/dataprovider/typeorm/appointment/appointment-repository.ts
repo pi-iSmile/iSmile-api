@@ -84,7 +84,26 @@ class AppointmentRepository implements IAppointmentRepository {
 
     public async findAllByProfessionalId(professionalId: number): Promise<AppointmentEntity[]> {
       const appointment = await this.repository.find({
-        where: { professional_id: professionalId },
+        relations: ['professional'],
+        where: {
+          professional: {
+            id: professionalId,
+          },
+        },
+      });
+
+      return appointment;
+    }
+
+    public async findByIdAndProfessionalEmail(id: number, email: string): Promise<AppointmentEntity | undefined> {
+      const appointment = await this.repository.findOne({
+        relations: ['professional'],
+        where: {
+          id,
+          professional: {
+            email,
+          },
+        },
       });
 
       return appointment;

@@ -51,4 +51,8 @@ export class FakeAppointmentRepository implements IAppointmentRepository {
     public async findAllByProfessionalId(professionalId: number): Promise<AppointmentEntity[]> {
       return this.appointments.filter((appointment) => appointment.professional.id === professionalId);
     }
+
+    public async findByIdAndProfessionalEmail(id: number, email: string): Promise<AppointmentEntity | undefined> {
+      return this.appointments.find((p) => p.professional.email === email && p.id === id);
+    }
 }

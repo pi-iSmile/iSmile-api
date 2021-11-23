@@ -35,4 +35,15 @@ appointmentRouter.patch('/:id/cancel',
   }),
   appointmentController.cancel);
 
+appointmentRouter.get('/',
+  appointmentController.findAllByLoggedUser);
+
+appointmentRouter.get('/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.number().integer().positive().required(),
+    },
+  }),
+  appointmentController.findAllAppointmentsByIdAndLoggedUser);
+
 export default appointmentRouter;

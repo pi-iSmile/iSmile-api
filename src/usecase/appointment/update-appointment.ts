@@ -16,15 +16,15 @@ export default class UpdateAppointment {
   public async updateStatus(id: number, status: AppointmentStatus): Promise<AppointmentEntity> {
     const appointment = await this.appointmentRepository.findById(id);
     if (!appointment) {
-      throw new AppError(`Agendamento com o ${id} não existe.`, 404);
+      throw new AppError(`Agendamento com o id ${id} não existe.`, 404);
     }
 
     if (appointment.status === AppointmentStatus.CANCELED || appointment.status === AppointmentStatus.FINISHED || appointment.status === AppointmentStatus.EXPIRED) {
-      throw new AppError(`Agendamento com o ${id} já foi processado!`, 422);
+      throw new AppError(`Agendamento com o id ${id} já foi processado!`, 422);
     }
 
     if (status === appointment.status) {
-      throw new AppError(`Agendamento com o ${id} já está com o status ${AppointmentStatus[status]}!`, 422);
+      throw new AppError(`Agendamento com o id ${id} já está com o status ${AppointmentStatus[status]}!`, 422);
     }
 
     appointment.status = status;

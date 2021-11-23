@@ -92,8 +92,6 @@ export default class AppointmentController {
   }
 
   public async findAllByLoggedUser(request: AuthRequest, response: Response): Promise<Response> {
-    const { id } = request.params;
-
     const getAppointment = container.resolve(GetAppointment);
 
     const listOfAppointements = await getAppointment.findAllByLoggedUser(request.professional as string);
@@ -117,5 +115,33 @@ export default class AppointmentController {
     }));
 
     return response.status(200).json(responseList);
+  }
+
+  public async findAllAppointmentsByIdAndLoggedUser(request: AuthRequest, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const getAppointment = container.resolve(GetAppointment);
+
+    const appointment = await getAppointment.findByAppointmentIdAndEmail(parseInt(id, 10), request.professional as string);
+
+    const object = {
+      id: appointment.id,
+      status: AppointmentStatus[appointment.status],
+      date: appointment.date,
+      professional: {
+        id: appointment.professional.id,
+        name: appointment.professional.name,
+        email: appointment.professional.email,
+      },
+      patient: {
+        id: appointment.patient.id,
+        name: appointment.patient.name,
+        email: appointment.patient.email,
+      },
+      createdAt: appointment.createdAt,
+      updatedAt: appointment.updatedAt,
+    };
+
+    return response.status(200).json(object);
   }
 }

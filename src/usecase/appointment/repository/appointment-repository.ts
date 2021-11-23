@@ -7,6 +7,8 @@ export default interface IAppointmentRepository {
 
     findById(id: number): Promise<AppointmentEntity | undefined>;
 
+    findByIdAndProfessionalEmail(id: number, email: string): Promise<AppointmentEntity | undefined>;
+
     findByStatus(status: string): Promise<AppointmentEntity | undefined>;
 
     findByPatientId(patientId: number): Promise<AppointmentEntity | undefined>;
