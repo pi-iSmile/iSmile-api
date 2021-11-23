@@ -1,7 +1,12 @@
+import { ProfessionalEntity } from '../../entity/professional/professional.entity';
+
 export default class Session {
-  constructor(token: string) {
+  constructor(token: string, professional: ProfessionalEntity) {
     this.token = token;
+    this.professional = professional;
   }
 
-  private token: string;
+    public token: string;
+
+    public professional: ProfessionalEntity
 }

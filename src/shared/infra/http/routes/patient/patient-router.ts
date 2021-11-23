@@ -3,6 +3,7 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import PatientController from '../../../../../adapter/presentation/controller/patient/patient-controller';
 import ensureAuthenticated from '../../../../middleware/ensure-authenticated';
+import professionalRouter from '../professional/professional-router';
 
 const patientRouter = Router();
 
@@ -39,20 +40,20 @@ patientRouter.put(
 );
 
 patientRouter.get(
-  '/:id',
+  '/:email',
   celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required().min(5).max(255)
-        .required(),
-      email: Joi.string().required(),
-      birthdate: Joi.date().required(),
-    },
     [Segments.PARAMS]: {
-      id: Joi.number().integer().positive().required(),
+      email: Joi.string().email().required(),
     },
   }),
   ensureAuthenticated,
-  patientController.findById,
+  patientController.findByEmail,
+);
+
+patientRouter.get(
+  '/',
+  ensureAuthenticated,
+  patientController.findAll,
 );
 
 export default patientRouter;

@@ -1,6 +1,7 @@
 import { Response, Request } from 'express';
 import { container } from 'tsyringe';
 import CreateSession from '../../../../usecase/session/create-session';
+import { ProfessionalStatus } from '../../../../entity/professional/professional-status';
 
 export default class SessionController {
   public async login(request: Request, response: Response): Promise<Response> {
@@ -8,7 +9,17 @@ export default class SessionController {
 
     const session = container.resolve(CreateSession);
 
-    const token = await session.login(email, password);
-    return response.status(200).json(token);
+    const result = await session.login(email, password);
+
+    const object = {
+      token: result.token,
+      professional: {
+        id: result.professional.id,
+        name: result.professional.name,
+        email: result.professional.email,
+      },
+    };
+
+    return response.status(200).json(object);
   }
 }

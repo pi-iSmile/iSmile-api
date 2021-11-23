@@ -4,6 +4,7 @@ import CreateProfessional from '../../../../usecase/professional/create-professi
 import UpdateProfessional from '../../../../usecase/professional/update-professional';
 import UpdateProfessionalPassword from '../../../../usecase/professional/update-professional-password';
 import { ProfessionalStatus } from '../../../../entity/professional/professional-status';
+import GetProfessional from '../../../../usecase/professional/get-professional';
 
 export default class ProfessionalController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -15,7 +16,17 @@ export default class ProfessionalController {
 
     const result = await createProfessional.create(name, email, password, birthdate);
 
-    return response.status(201).json(result);
+    const object = {
+      id: result.id,
+      name: result.name,
+      email: result.email,
+      status: ProfessionalStatus[result.status],
+      birthdate: result.birthdate,
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+    };
+
+    return response.status(201).json(object);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -29,7 +40,17 @@ export default class ProfessionalController {
 
     const result = await updateProfessional.update(parseInt(id, 10), name, status, birthdate);
 
-    return response.status(200).json(result);
+    const object = {
+      id: result.id,
+      name: result.name,
+      email: result.email,
+      status: ProfessionalStatus[result.status],
+      birthdate: result.birthdate,
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+    };
+
+    return response.status(200).json(object);
   }
 
   public async updatePassword(request: Request, response: Response): Promise<Response> {
@@ -38,8 +59,46 @@ export default class ProfessionalController {
 
     const updateProfessionalPassword = container.resolve(UpdateProfessionalPassword);
 
-    const result = await updateProfessionalPassword.updatePassword(parseInt(id, 10), oldPassword, newPassword);
+    await updateProfessionalPassword.updatePassword(parseInt(id, 10), oldPassword, newPassword);
 
-    return response.status(200).json(result);
+    return response.status(200);
+  }
+
+  public async findByEmail(request: Request, response: Response): Promise<Response> {
+    const { email } = request.params;
+
+    const getProfessional = container.resolve(GetProfessional);
+
+    const result = await getProfessional.findByEmail(email as string);
+
+    const object = {
+      id: result.id,
+      name: result.name,
+      email: result.email,
+      status: ProfessionalStatus[result.status],
+      birthdate: result.birthdate,
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+    };
+
+    return response.status(200).json(object);
+  }
+
+  public async findAll(request: Request, response: Response): Promise<Response> {
+    const getProfessional = container.resolve(GetProfessional);
+
+    const result = await getProfessional.findAll();
+
+    const professionalResponse = result.map((professional) => ({
+      id: professional.id,
+      name: professional.name,
+      email: professional.email,
+      status: ProfessionalStatus[professional.status],
+      birthdate: professional.birthdate,
+      createdAt: professional.createdAt,
+      updatedAt: professional.updatedAt,
+    }));
+
+    return response.status(200).json(professionalResponse);
   }
 }

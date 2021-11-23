@@ -31,6 +31,6 @@ export default class CreateSession {
 
     const token = sign({}, secret, { subject: professional.email });
 
-    return new Session(token);
+    return new Session(token, professional);
   }
 }

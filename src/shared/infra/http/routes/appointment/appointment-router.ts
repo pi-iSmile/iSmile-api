@@ -19,4 +19,20 @@ appointmentRouter.post('/',
   }),
   appointmentController.create);
 
+appointmentRouter.patch('/:id/confirm',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.number().integer().positive().required(),
+    },
+  }),
+  appointmentController.confirm);
+
+appointmentRouter.patch('/:id/cancel',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.number().integer().positive().required(),
+    },
+  }),
+  appointmentController.cancel);
+
 export default appointmentRouter;

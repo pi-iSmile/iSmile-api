@@ -16,8 +16,6 @@ export default class CreateProfessional {
   }
 
   public async create(name: string, email: string, password: string, birthdate: Date): Promise<ProfessionalEntity> {
-    const { secret } = auth.jwt;
-
     const encryptedPassword = hashSync(password, 8);
     const request = ProfessionalEntity.create(name, email, birthdate, encryptedPassword);
 

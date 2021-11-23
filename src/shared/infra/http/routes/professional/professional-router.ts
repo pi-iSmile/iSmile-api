@@ -53,4 +53,21 @@ professionalRouter.put(
   professionalController.updatePassword,
 );
 
+professionalRouter.get(
+  '/:email',
+  celebrate({
+    [Segments.PARAMS]: {
+      email: Joi.string().email().required(),
+    },
+  }),
+  ensureAuthenticated,
+  professionalController.findByEmail,
+);
+
+professionalRouter.get(
+  '/',
+  ensureAuthenticated,
+  professionalController.findAll,
+);
+
 export default professionalRouter;

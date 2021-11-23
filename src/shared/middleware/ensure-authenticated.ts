@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import AppError from '../AppError';
 import auth from '../config/auth';
+import { AuthRequest } from '../../../@types/express';
 
 interface IToken {
     iat: number;
@@ -9,7 +10,7 @@ interface IToken {
     sub: string;
 }
 
-export default function ensureAuthenticated(request: Request, response: Response, next: NextFunction): void {
+export default function ensureAuthenticated(request: AuthRequest, response: Response, next: NextFunction): void {
   const { secret } = auth.jwt;
 
   const authenticatonHeader = request.headers.authorization;
@@ -21,7 +22,12 @@ export default function ensureAuthenticated(request: Request, response: Response
   const [, token] = authenticatonHeader.split(' ');
 
   try {
-    verify(token, secret);
+    const decoded = verify(token, secret);
+
+    const { sub } = decoded as IToken;
+
+    request.professional = sub;
+
     return next();
   } catch {
     throw new AppError('Token JWT inválido.', 401);

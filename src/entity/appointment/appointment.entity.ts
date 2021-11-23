@@ -25,10 +25,10 @@ export class AppointmentEntity extends BaseEntity {
     })
     status: AppointmentStatus;
 
-    @ManyToOne(() => PatientEntity)
+    @ManyToOne(() => PatientEntity, { eager: true })
     patient: PatientEntity;
 
-    @ManyToOne(() => ProfessionalEntity)
+    @ManyToOne(() => ProfessionalEntity, { eager: true })
     professional: ProfessionalEntity;
 
     static create(date: Date, status: AppointmentStatus = AppointmentStatus.PENDING, patient: PatientEntity, professional: ProfessionalEntity): AppointmentEntity {
