@@ -33,4 +33,8 @@ export default class GetAppointment {
 
     return appointment;
   }
+
+  public async findAllAppointmentsByProfessionalId(id: number): Promise<AppointmentEntity[]> {
+    return await this.appointmentRepository.findAllByProfessionalId(id);
+  }
 }
