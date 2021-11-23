@@ -82,7 +82,7 @@ class AppointmentRepository implements IAppointmentRepository {
       });
     }
 
-    public async findAllByProfessionalId(professionalId: number): Promise<AppointmentEntity[] | undefined> {
+    public async findAllByProfessionalId(professionalId: number): Promise<AppointmentEntity[]> {
       const appointment = await this.repository.find({
         where: { professional_id: professionalId },
       });

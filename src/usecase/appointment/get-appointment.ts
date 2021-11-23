@@ -1,9 +1,9 @@
 import { container, inject, injectable } from 'tsyringe';
-import GetProfessional from 'usecase/professional/get-professional';
 import AppointmentRepository from '../../dataprovider/typeorm/appointment/appointment-repository';
 import { AppointmentEntity } from '../../entity/appointment/appointment.entity';
 import AppError from '../../shared/AppError';
 import IAppointmentRepository from './repository/appointment-repository';
+import GetProfessional from '../professional/get-professional';
 
 @injectable()
 export default class GetAppointment {
@@ -24,7 +24,7 @@ export default class GetAppointment {
   public async findAllByLoggedUser(email: string): Promise<AppointmentEntity[]> {
     const getProfessional = container.resolve(GetProfessional);
 
-    const professional = await getProfessional.findByEmail(email)
+    const professional = await getProfessional.findByEmail(email);
 
     const appointment = await this.appointmentRepository.findAllByProfessionalId(professional.id);
     if (!appointment) {
