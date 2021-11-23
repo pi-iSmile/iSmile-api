@@ -3,6 +3,8 @@ import { container } from 'tsyringe';
 import CreateAppointment from '../../../../usecase/appointment/create-appointment';
 import { AppointmentStatus } from '../../../../entity/appointment/appointment-status';
 import UpdateAppointment from '../../../../usecase/appointment/update-appointment';
+import { AuthRequest } from '../../../../../@types/express';
+import GetAppointment from 'usecase/appointment/get-appointment';
 
 export default class AppointmentController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -87,5 +89,35 @@ export default class AppointmentController {
     };
 
     return response.status(200).json(object);
+  }
+
+  public async findAllByLoggedUser(request: AuthRequest, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const getAppointment = container.resolve(GetAppointment);
+
+    const listOfAppointements = await getAppointment.findAllByLoggedUser(request.professional as string);
+
+    const responseList = listOfAppointements.map(appointment => {
+      return {
+        id: appointment.id,
+        status: AppointmentStatus[appointment.status],
+        date: appointment.date,
+        professional: {
+          id: appointment.professional.id,
+          name: appointment.professional.name,
+          email: appointment.professional.email,
+        },
+        patient: {
+          id: appointment.patient.id,
+          name: appointment.patient.name,
+          email: appointment.patient.email,
+        },
+        createdAt: appointment.createdAt,
+        updatedAt: appointment.updatedAt,
+      };
+    })
+
+    return response.status(200).json(responseList);
   }
 }
