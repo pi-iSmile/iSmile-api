@@ -108,6 +108,10 @@ class AppointmentRepository implements IAppointmentRepository {
 
       return appointment;
     }
+
+    findByStatusAndInitialDateAndFinalDate(status: string, initialDate: Date, finalDate: Date): Promise<AppointmentEntity[] | undefined> {
+      return Promise.resolve(undefined);
+    }
 }
 
 export default AppointmentRepository;

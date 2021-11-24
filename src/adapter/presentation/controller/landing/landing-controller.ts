@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { Scheduler } from '@ssense/sscheduler';
+import { format } from 'date-fns';
 import GetProfessional from '../../../../usecase/professional/get-professional';
 import GetAppointment from '../../../../usecase/appointment/get-appointment';
 
@@ -23,19 +24,18 @@ export default class LandingController {
     const id = parseInt(<string>request.query.professional_id);
     const getAppointment = container.resolve(GetAppointment);
     const result = await getAppointment.findAllAppointmentsByProfessionalId(id);
-
     const dates = result.map((appointment) => ({
-      from: appointment.date.toISOString(),
-      duration: 60,
+      from: format(appointment.date, 'yyyy/MM/dd hh:MM:ss'),
+      duration: 50,
     }));
 
     const today = new Date();
 
     const scheduler = new Scheduler();
     const availability = scheduler.getAvailability({
-      from: today.toISOString().split('T')[0],
-      to: new Date(today.getFullYear(), today.getMonth() + 1).toISOString().split('T')[0],
-      duration: 60,
+      from: format(today, 'yyyy/MM/dd hh:MM:ss'),
+      to: format(new Date(today.getFullYear(), today.getMonth() + 1), 'yyyy/MM/dd hh:MM:ss'),
+      duration: 50,
       interval: 60,
       schedule: {
         weekdays: {

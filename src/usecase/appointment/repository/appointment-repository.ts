@@ -22,4 +22,6 @@ export default interface IAppointmentRepository {
     findByDateAndPatientEmail(date: Date, patientEmail: string): Promise<AppointmentEntity | undefined>;
 
     findAll(): Promise<AppointmentEntity[]>;
+
+    findByStatusAndInitialDateAndFinalDate(status: string, initialDate: Date, finalDate: Date) : Promise<AppointmentEntity[] | undefined>;
 };

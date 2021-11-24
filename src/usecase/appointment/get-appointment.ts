@@ -4,6 +4,8 @@ import { AppointmentEntity } from '../../entity/appointment/appointment.entity';
 import AppError from '../../shared/AppError';
 import IAppointmentRepository from './repository/appointment-repository';
 import GetProfessional from '../professional/get-professional';
+import { AppointmentStatus } from '../../entity/appointment/appointment-status';
+import GetPatient from '../patient/get-patient';
 
 @injectable()
 export default class GetAppointment {
@@ -36,5 +38,15 @@ export default class GetAppointment {
 
   public async findAllAppointmentsByProfessionalId(id: number): Promise<AppointmentEntity[]> {
     return await this.appointmentRepository.findAllByProfessionalId(id);
+  }
+
+  public async findAllToDashboard(professinalEmail: string, patientEmail: string, status: AppointmentStatus, initialDate: Date, finalDate: Date) {
+    const getProfessional = container.resolve(GetProfessional);
+
+    const professional = await getProfessional.findByEmail(professinalEmail);
+
+    const getPatient = container.resolve(GetPatient);
+
+    const patient = await getPatient.findByEmail(patientEmail);
   }
 }
