@@ -24,18 +24,19 @@ export default class LandingController {
     const id = parseInt(<string>request.query.professional_id);
     const getAppointment = container.resolve(GetAppointment);
     const result = await getAppointment.findAllAppointmentsByProfessionalId(id);
+
     const dates = result.map((appointment) => ({
-      from: format(appointment.date, 'yyyy/MM/dd hh:MM:ss'),
-      duration: 50,
+      from: format(appointment.date, 'yyyy-MM-dd hh:mm:ss'),
+      duration: 60,
     }));
 
     const today = new Date();
 
     const scheduler = new Scheduler();
     const availability = scheduler.getAvailability({
-      from: format(today, 'yyyy/MM/dd hh:MM:ss'),
-      to: format(new Date(today.getFullYear(), today.getMonth() + 1), 'yyyy/MM/dd hh:MM:ss'),
-      duration: 50,
+      from: format(today, 'yyyy-MM-dd'),
+      to: format(new Date(today.getFullYear(), today.getMonth() + 1), 'yyyy-MM-dd'),
+      duration: 60,
       interval: 60,
       schedule: {
         weekdays: {

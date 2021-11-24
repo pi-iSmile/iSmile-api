@@ -40,13 +40,15 @@ export default class GetAppointment {
     return await this.appointmentRepository.findAllByProfessionalId(id);
   }
 
-  public async findAllToDashboard(professinalEmail: string, patientEmail: string, status: AppointmentStatus, initialDate: Date, finalDate: Date) {
-    const getProfessional = container.resolve(GetProfessional);
-
-    const professional = await getProfessional.findByEmail(professinalEmail);
-
-    const getPatient = container.resolve(GetPatient);
-
-    const patient = await getPatient.findByEmail(patientEmail);
-  }
+  // public async findAllToDashboard(professionalEmail: string, patientEmail: string, status: AppointmentStatus, initialDate: Date, finalDate: Date): Promise<AppointmentEntity[]> {
+  //   const getProfessional = container.resolve(GetProfessional);
+  //
+  //   const professional = await getProfessional.findByEmail(professinalEmail);
+  //
+  //   const getPatient = container.resolve(GetPatient);
+  //
+  //   const patient = await getPatient.findByEmail(patientEmail);
+  //
+  //   const getAppointement = container.resolve(GetAppointment);
+  // }
 }
