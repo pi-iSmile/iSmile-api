@@ -1,12 +1,12 @@
 import {
-  Between, EntityRepository, getRepository, Repository,
+  EntityRepository, getRepository, Repository, Between,
 } from 'typeorm';
 import IAppointmentRepository from '../../../usecase/appointment/repository/appointment-repository';
 import { AppointmentEntity } from '../../../entity/appointment/appointment.entity';
 
 @EntityRepository(AppointmentEntity)
 class AppointmentRepository implements IAppointmentRepository {
-    private repository: Repository<AppointmentEntity>
+    public repository: Repository<AppointmentEntity>
 
     constructor() {
       this.repository = getRepository(AppointmentEntity);
@@ -16,7 +16,6 @@ class AppointmentRepository implements IAppointmentRepository {
       const appointment = await this.repository.create(request);
 
       await this.repository.save(appointment);
-
       return appointment;
     }
 
@@ -107,10 +106,6 @@ class AppointmentRepository implements IAppointmentRepository {
       });
 
       return appointment;
-    }
-
-    findByStatusAndInitialDateAndFinalDate(status: string, initialDate: Date, finalDate: Date): Promise<AppointmentEntity[] | undefined> {
-      return Promise.resolve(undefined);
     }
 }
 

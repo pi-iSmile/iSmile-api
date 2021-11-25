@@ -28,7 +28,7 @@ professionalRouter.put(
     [Segments.BODY]: {
       name: Joi.string().min(5).max(255).required(),
       birthdate: Joi.date().iso().required(),
-      status: Joi.string().valid('ENABLED', 'DISABLED').required(), // TODO -> convert enum to string
+      status: Joi.string().valid('ENABLED', 'DISABLED').required(),
     },
     [Segments.PARAMS]: {
       id: Joi.number().integer().positive().required(),

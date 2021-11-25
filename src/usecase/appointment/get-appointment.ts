@@ -2,7 +2,6 @@ import { container, inject, injectable } from 'tsyringe';
 import AppointmentRepository from '../../dataprovider/typeorm/appointment/appointment-repository';
 import { AppointmentEntity } from '../../entity/appointment/appointment.entity';
 import AppError from '../../shared/AppError';
-import IAppointmentRepository from './repository/appointment-repository';
 import GetProfessional from '../professional/get-professional';
 import { AppointmentStatus } from '../../entity/appointment/appointment-status';
 import GetPatient from '../patient/get-patient';
@@ -11,7 +10,7 @@ import GetPatient from '../patient/get-patient';
 export default class GetAppointment {
   constructor(
         @inject(AppointmentRepository)
-        private appointmentRepository: IAppointmentRepository,
+        private appointmentRepository: AppointmentRepository,
   ) {
   }
 
@@ -40,15 +39,32 @@ export default class GetAppointment {
     return await this.appointmentRepository.findAllByProfessionalId(id);
   }
 
-  // public async findAllToDashboard(professionalEmail: string, patientEmail: string, status: AppointmentStatus, initialDate: Date, finalDate: Date): Promise<AppointmentEntity[]> {
-  //   const getProfessional = container.resolve(GetProfessional);
-  //
-  //   const professional = await getProfessional.findByEmail(professinalEmail);
-  //
-  //   const getPatient = container.resolve(GetPatient);
-  //
-  //   const patient = await getPatient.findByEmail(patientEmail);
-  //
-  //   const getAppointement = container.resolve(GetAppointment);
-  // }
+  public async findAllToDashboard(professionalEmail: string | null, patientEmail: string | null, status: AppointmentStatus | null, initialDate: Date | null, finalDate: Date | null): Promise<AppointmentEntity[]> {
+    const query = this.appointmentRepository.repository.createQueryBuilder('appointment');
+
+    query.leftJoinAndSelect('appointment.professional', 'professional');
+    query.leftJoinAndSelect('appointment.patient', 'patient');
+
+    if (professionalEmail != null) {
+      query.andWhere('professional.email = :professionalEmail', { professionalEmail });
+    }
+
+    if (patientEmail != null) {
+      query.andWhere('patient.email = :patientEmail', { patientEmail });
+    }
+
+    if (status != null) {
+      query.andWhere('appointment.status = :status', { status });
+    }
+
+    if (initialDate != null) {
+      query.andWhere('appointment.date >= :initialDate', { initialDate });
+    }
+
+    if (finalDate != null) {
+      query.andWhere('appointment.date <= :finalDate', { finalDate });
+    }
+
+    return query.getMany();
+  }
 }
