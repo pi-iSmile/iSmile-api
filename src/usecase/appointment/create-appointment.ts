@@ -14,6 +14,13 @@ import IProfessionalRepository from '../professional/repository/professional-rep
 import { ProfessionalEntity } from '../../entity/professional/professional.entity';
 import { AppointmentStatus } from '../../entity/appointment/appointment-status';
 import { PatientEntity } from '../../entity/patient/patient.entity';
+import MailSender from '../mail/mailsender';
+
+const fs = require('fs');
+
+const { promisify } = require('util');
+
+const readFile = promisify(fs.readFile);
 
 @injectable()
 export default class CreateAppointment {
@@ -62,7 +69,11 @@ export default class CreateAppointment {
 
     const appointment = AppointmentEntity.create(date, AppointmentStatus.PENDING, patient, professional);
 
-    return await this.appointmentRepository.create(appointment);
+    const result = await this.appointmentRepository.create(appointment);
+
+    new MailSender().sendCreationMail(result);
+
+    return result;
   }
 
   public async professionalAlreadyHasAppointment(professional: ProfessionalEntity, date: Date) {
