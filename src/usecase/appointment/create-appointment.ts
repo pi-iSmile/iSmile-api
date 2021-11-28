@@ -35,6 +35,7 @@ export default class CreateAppointment {
   }
 
   public async create(date: Date, professionalEmail: string, patientEmail: string): Promise<AppointmentEntity> {
+    
     if (getMinutes(date) !== 0 || getSeconds(date) !== 0) {
       throw new AppError('Você somente pode marcar horários em ponto. Exemplo: 13:00, 14:00, 15:00, etc.');
     }
@@ -51,7 +52,7 @@ export default class CreateAppointment {
       throw new AppError(`Um paciente com o e-mail ${patientEmail} não existe.`, 404);
     }
 
-    if (isBefore(appointmentDate, Date.now())) {
+    if (isBefore(appointmentDate, new Date())) {
       throw new AppError('Você não pode agendar com uma data que ja passou.', 422);
     }
 

@@ -4,6 +4,7 @@ import { ProfessionalEntity } from '../../entity/professional/professional.entit
 import IProfessionalRepository from './repository/professional-repository';
 import ProfessionalRepository from '../../dataprovider/typeorm/professional/professional-repository';
 import AppError from '../../shared/AppError';
+import { hashSync } from 'bcryptjs';
 
 @injectable()
 export default class UpdateProfessionalPassword {
@@ -23,7 +24,7 @@ export default class UpdateProfessionalPassword {
       throw new AppError('Credenciais inválidas.', 403);
     }
 
-    existingProfessional.password = newPassword;
+    existingProfessional.password = hashSync(newPassword, 8);
 
     return this.repository.update(existingProfessional);
   }

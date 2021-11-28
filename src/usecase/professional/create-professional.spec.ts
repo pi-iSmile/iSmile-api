@@ -23,7 +23,6 @@ describe('CreateProfessional', () => {
     // Assert
     expect(result.name).toBe(name);
     expect(result.email).toBe(email);
-    expect(result.password).toBe(password);
     expect(result.birthdate).toBe(date);
   });
   it('Should throw error if professional already exists', async () => {
