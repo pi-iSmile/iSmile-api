@@ -1,9 +1,12 @@
 import * as nodemailer from 'nodemailer';
 import { format } from 'date-fns';
+import { Logger } from 'tslog';
 import config from '../../shared/config/mail';
 import { AppointmentEntity } from '../../entity/appointment/appointment.entity';
 
 const hbs = require('nodemailer-express-handlebars');
+
+const log: Logger = new Logger();
 
 export default class MailSender {
   sendCreationMail(appointment: AppointmentEntity) {
@@ -38,9 +41,10 @@ export default class MailSender {
 
     transporter.sendMail(mailOptions, (error, _) => {
       if (error) {
-        console.log(error);
+        log.error(error);
+      } else {
+        log.info('Email enviado com sucesso!');
       }
-      console.log('Email enviado com sucesso');
     });
   }
 }
