@@ -4,6 +4,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import 'dotenv/config';
 import { errors } from 'celebrate';
 import { Logger } from 'tslog';
+import cors from 'cors';
+import helmet from 'helmet';
 
 import 'express-async-errors';
 import AppError from '../shared/AppError';
@@ -16,9 +18,11 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 app.use(errors());
+app.use(cors());
+app.use(helmet());
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
-  console.error(err);
+  log.error(err);
 
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({

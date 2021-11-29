@@ -1,27 +1,30 @@
 import { inject, injectable } from 'tsyringe';
-import { isAfter } from 'date-fns';
+import { compareSync } from 'bcryptjs';
 import { ProfessionalEntity } from '../../entity/professional/professional.entity';
 import IProfessionalRepository from './repository/professional-repository';
 import ProfessionalRepository from '../../dataprovider/typeorm/professional/professional-repository';
 import AppError from '../../shared/AppError';
-import UpdateProfessionalPasswordDTO
-  from '../../adapter/presentation/controller/professional/dto/update-professional-password-d-t-o';
+import { hashSync } from 'bcryptjs';
 
 @injectable()
 export default class UpdateProfessionalPassword {
   constructor(
         @inject(ProfessionalRepository)
         private repository: IProfessionalRepository,
-  ) {}
+  ) {
+  }
 
-  public async updatePassword(id: number, request: UpdateProfessionalPasswordDTO): Promise<ProfessionalEntity> {
+  public async updatePassword(id: number, oldPassword: string, newPassword: string): Promise<ProfessionalEntity> {
     const existingProfessional = await this.repository.findById(id);
     if (!existingProfessional) {
-      throw new AppError('Professional does not exist');
+      throw new AppError(`Profissional com ID: ${id} não existe.`, 404);
     }
 
-    // TODO: -> validate if old password is equals request.oldPassword
-    existingProfessional.password = request.newPassword;
+    if (!compareSync(oldPassword, existingProfessional.password)) {
+      throw new AppError('Credenciais inválidas.', 403);
+    }
+
+    existingProfessional.password = hashSync(newPassword, 8);
 
     return this.repository.update(existingProfessional);
   }

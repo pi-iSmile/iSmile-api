@@ -1,4 +1,5 @@
 import { Column, Entity } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import BasePerson from '../shared/base-person';
 import { ProfessionalStatus } from './professional-status';
 

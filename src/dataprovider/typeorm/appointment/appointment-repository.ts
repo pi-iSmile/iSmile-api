@@ -1,16 +1,14 @@
-import { EntityRepository, getRepository, Repository } from 'typeorm';
-import { Logger } from 'tslog';
+import {
+  EntityRepository, getRepository, Repository, Between,
+} from 'typeorm';
 import IAppointmentRepository from '../../../usecase/appointment/repository/appointment-repository';
 import { AppointmentEntity } from '../../../entity/appointment/appointment.entity';
 
-const log: Logger = new Logger();
-
 @EntityRepository(AppointmentEntity)
 class AppointmentRepository implements IAppointmentRepository {
-    private repository: Repository<AppointmentEntity>
+    public repository: Repository<AppointmentEntity>
 
     constructor() {
-      log.info('get repository');
       this.repository = getRepository(AppointmentEntity);
     }
 
@@ -18,7 +16,6 @@ class AppointmentRepository implements IAppointmentRepository {
       const appointment = await this.repository.create(request);
 
       await this.repository.save(appointment);
-
       return appointment;
     }
 
@@ -55,6 +52,57 @@ class AppointmentRepository implements IAppointmentRepository {
     public async findByStatus(status: string): Promise<AppointmentEntity | undefined> {
       const appointment = await this.repository.findOne({
         where: { status },
+      });
+
+      return appointment;
+    }
+
+    public async findByDateAndProfessionalEmail(date: Date, professionalEmail: string): Promise<AppointmentEntity | undefined> {
+      return await this.repository.findOne({
+        relations: ['professional'],
+        where: {
+          professional: {
+            email: professionalEmail,
+          },
+          date,
+        },
+      });
+    }
+
+    public async findByDateAndPatientEmail(date: Date, patientEmail: string): Promise<AppointmentEntity | undefined> {
+      return await this.repository.findOne({
+        relations: ['patient'],
+        where: {
+          patient: {
+            email: patientEmail,
+          },
+          date,
+        },
+      });
+    }
+
+    public async findAllByProfessionalId(professionalId: number): Promise<AppointmentEntity[]> {
+      const appointment = await this.repository.find({
+        relations: ['professional'],
+        where: {
+          professional: {
+            id: professionalId,
+          },
+        },
+      });
+
+      return appointment;
+    }
+
+    public async findByIdAndProfessionalEmail(id: number, email: string): Promise<AppointmentEntity | undefined> {
+      const appointment = await this.repository.findOne({
+        relations: ['professional'],
+        where: {
+          id,
+          professional: {
+            email,
+          },
+        },
       });
 
       return appointment;

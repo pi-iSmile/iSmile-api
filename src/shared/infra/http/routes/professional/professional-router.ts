@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import ProfessionalController from '../../../../../adapter/presentation/controller/professional/professional-controller';
+import ProfessionalController
+  from '../../../../../adapter/presentation/controller/professional/professional-controller';
+import ensureAuthenticated from '../../../../middleware/ensure-authenticated';
 
 const professionalRouter = Router();
 
@@ -26,12 +28,13 @@ professionalRouter.put(
     [Segments.BODY]: {
       name: Joi.string().min(5).max(255).required(),
       birthdate: Joi.date().iso().required(),
-      status: Joi.string().valid('ENABLED', 'DISABLED').required(), // TODO -> convert enum to string
+      status: Joi.string().valid('ENABLED', 'DISABLED').required(),
     },
     [Segments.PARAMS]: {
       id: Joi.number().integer().positive().required(),
     },
   }),
+  ensureAuthenticated,
   professionalController.update,
 );
 
@@ -39,14 +42,32 @@ professionalRouter.put(
   '/:id/password',
   celebrate({
     [Segments.BODY]: {
-      old_password: Joi.string().min(4).max(255).required(),
-      new_password: Joi.string().min(4).max(255).required(),
+      oldPassword: Joi.string().min(4).max(255).required(),
+      newPassword: Joi.string().min(4).max(255).required(),
     },
     [Segments.PARAMS]: {
       id: Joi.number().integer().positive().required(),
     },
   }),
+  ensureAuthenticated,
   professionalController.updatePassword,
+);
+
+professionalRouter.get(
+  '/:email',
+  celebrate({
+    [Segments.PARAMS]: {
+      email: Joi.string().email().required(),
+    },
+  }),
+  ensureAuthenticated,
+  professionalController.findByEmail,
+);
+
+professionalRouter.get(
+  '/',
+  ensureAuthenticated,
+  professionalController.findAll,
 );
 
 export default professionalRouter;
