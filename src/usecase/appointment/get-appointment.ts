@@ -4,7 +4,6 @@ import { AppointmentEntity } from '../../entity/appointment/appointment.entity';
 import AppError from '../../shared/AppError';
 import GetProfessional from '../professional/get-professional';
 import { AppointmentStatus } from '../../entity/appointment/appointment-status';
-import GetPatient from '../patient/get-patient';
 
 @injectable()
 export default class GetAppointment {

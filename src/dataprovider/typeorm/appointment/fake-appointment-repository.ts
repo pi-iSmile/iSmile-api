@@ -4,11 +4,12 @@ import { AppointmentEntity } from '../../../entity/appointment/appointment.entit
 export class FakeAppointmentRepository implements IAppointmentRepository {
     private appointments: AppointmentEntity[] = [];
 
-    private id = 0;
+    private id = 1;
 
     public async create(request: AppointmentEntity): Promise<AppointmentEntity> {
       request.id = this.id;
       this.appointments.push(request);
+      this.id++;
       return request;
     }
 

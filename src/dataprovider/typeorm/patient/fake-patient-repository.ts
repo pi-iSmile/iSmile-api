@@ -4,11 +4,12 @@ import IPatientRepository from '../../../usecase/patient/repository/patient-repo
 export class FakePatientRepository implements IPatientRepository {
     private patients: PatientEntity[] = [];
 
-    private id = 0
+    private id = 1
 
     public async create(request: PatientEntity): Promise<PatientEntity> {
       request.id = this.id;
       this.patients.push(request);
+      this.id++;
       return request;
     }
 

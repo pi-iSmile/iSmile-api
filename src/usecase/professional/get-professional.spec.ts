@@ -12,7 +12,7 @@ describe('GetProfessional', () => {
     repository = new FakeProfessionalRepository();
     underTest = new GetProfessional(repository);
   });
-  it('Should return existing professional successfully', async () => {
+  it('Should return existing professional by id successfully', async () => {
     // Arrange
     const professional = await repository.create(ProfessionalEntity.create('mockado', 'mockado@gmail.com', new Date(), '123'));
     // Act
@@ -20,10 +20,33 @@ describe('GetProfessional', () => {
     // Assert
     expect(result).toBe(professional);
   });
-  it('Should throw error if professional does not exist', async () => {
+  it('Should throw error if professional does not exist by id', async () => {
     // Arrange
     const professional = ProfessionalEntity.create('dummy-name', 'dummy-email@gmail.com', new Date(), '123');
     // Act-Assert
     await expect(underTest.findById(-1)).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('Should return existing professional by email successfully', async () => {
+    // Arrange
+    const professional = await repository.create(ProfessionalEntity.create('mockado', 'mockado@gmail.com', new Date(), '123'));
+    // Act
+    const result = await underTest.findByEmail(professional.email);
+    // Assert
+    expect(result).toBe(professional);
+  });
+
+  it('Should throw error if professional does not exist by email', async () => {
+    await expect(underTest.findByEmail('anything@gmail.com')).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('Should return all professionals', async () => {
+    // Arrange
+    await repository.create(ProfessionalEntity.create('mockado', 'mockado@gmail.com', new Date(), '123'));
+    await repository.create(ProfessionalEntity.create('mockado2', 'mockado2@gmail.com', new Date(), '123'));
+    // Act
+    const result = await underTest.findAll();
+    // Assert
+    expect(result.length).toBe(2);
   });
 });

@@ -4,11 +4,12 @@ import IProfessionalRepository from '../../../usecase/professional/repository/pr
 export class FakeProfessionalRepository implements IProfessionalRepository {
     private professionals: ProfessionalEntity[] = [];
 
-    private id = 0;
+    private id = 1;
 
     public async create(request: ProfessionalEntity): Promise<ProfessionalEntity> {
       request.id = this.id;
       this.professionals.push(request);
+      this.id++;
       return request;
     }
 
