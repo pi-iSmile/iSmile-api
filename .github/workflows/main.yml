@@ -13,10 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Running tests
-        uses: artiomtr/jest-coverage-report-action@v2.0-rc.5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          threshold: 70
+        run: npm run test --coverage
 
   deploy:
     runs-on: ubuntu-latest
