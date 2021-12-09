@@ -59,9 +59,9 @@ export default class ProfessionalController {
 
     const updateProfessionalPassword = container.resolve(UpdateProfessionalPassword);
 
-    await updateProfessionalPassword.updatePassword(parseInt(id, 10), oldPassword, newPassword);
+    const result = await updateProfessionalPassword.updatePassword(parseInt(id, 10), oldPassword, newPassword);
 
-    return response.status(200);
+    return response.status(200).json(result);
   }
 
   public async findByEmail(request: Request, response: Response): Promise<Response> {
