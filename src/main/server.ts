@@ -15,12 +15,10 @@ import routes from '../shared/infra/http/routes/index';
 const log: Logger = new Logger();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(routes);
 app.use(errors());
-app.use(cors({
-  origin: '*',
-}));
 app.use(helmet());
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {

@@ -7,8 +7,6 @@ import ensureAuthenticated from '../../../../middleware/ensure-authenticated';
 const appointmentRouter = Router();
 const appointmentController = new AppointmentController();
 
-appointmentRouter.use(ensureAuthenticated);
-
 appointmentRouter.post('/',
   celebrate({
     [Segments.BODY]: {
